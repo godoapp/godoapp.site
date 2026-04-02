@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GoDo – Daily Challenges</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
+  <style>
+    @font-face {
+      font-family: 'CuteRoti';
+      src: url('Cute_Roti.ttf') format('truetype');
+    }
+    :root { --yellow:#FFD93D; --bg:#0d0d0d; --bg2:#161616; --white:#FFFDF7; --gray:#888; }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:'Nunito',sans-serif; background:var(--bg); color:var(--white); overflow-x:hidden; }
+
+    nav { display:flex; justify-content:space-between; align-items:center; padding:1rem 2.5rem; position:sticky; top:0; background:rgba(13,13,13,0.93); backdrop-filter:blur(12px); z-index:100; border-bottom:1px solid #222; }
+    .nav-logo { font-family:'CuteRoti',sans-serif; font-size:2rem; color:var(--yellow); text-decoration:none; letter-spacing:1px; }
+    .nav-links a { text-decoration:none; font-weight:700; color:var(--gray); margin-left:2rem; font-size:0.95rem; transition:color 0.2s; }
+    .nav-links a:hover { color:var(--yellow); }
+
+    .hero { min-height:92vh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:4rem 2rem 2rem; position:relative; overflow:hidden; }
+    .glow { position:absolute; border-radius:50%; filter:blur(120px); opacity:0.13; pointer-events:none; }
+    .glow-1 { width:700px; height:700px; background:var(--yellow); top:-250px; left:-200px; animation:drift 12s ease-in-out infinite; }
+    .glow-2 { width:500px; height:500px; background:var(--yellow); bottom:-150px; right:-150px; animation:drift 15s ease-in-out infinite reverse; }
+    @keyframes drift { 0%,100%{transform:translateY(0) scale(1);}50%{transform:translateY(-40px) scale(1.06);} }
+
+    .hero-logo { font-family:'CuteRoti',sans-serif; font-size:clamp(5rem,14vw,9rem); color:var(--yellow); margin-bottom:0.5rem; position:relative; z-index:1; animation:popIn 0.7s cubic-bezier(0.34,1.56,0.64,1) both; text-shadow:0 0 60px rgba(255,217,61,0.3); line-height:1; }
+    @keyframes popIn { from{transform:scale(0.7);opacity:0;} to{transform:scale(1);opacity:1;} }
+
+    .hero-badge { background:var(--yellow); color:var(--bg); font-weight:900; font-size:0.78rem; padding:0.4rem 1.2rem; border-radius:50px; margin-bottom:1.5rem; letter-spacing:1.5px; text-transform:uppercase; display:inline-block; position:relative; z-index:1; animation:popIn 0.6s cubic-bezier(0.34,1.56,0.64,1) 0.1s both; }
+
+    .hero-sub { font-size:clamp(1rem,2.5vw,1.25rem); color:var(--gray); max-width:490px; margin:0 auto 2.5rem; font-weight:600; line-height:1.75; position:relative; z-index:1; animation:slideUp 0.7s ease 0.2s both; }
+    @keyframes slideUp { from{transform:translateY(30px);opacity:0;} to{transform:translateY(0);opacity:1;} }
+
+    .cta-btn { display:inline-flex; align-items:center; gap:0.6rem; background:var(--yellow); color:var(--bg); font-family:'Nunito',sans-serif; font-weight:900; font-size:1.1rem; padding:1rem 2.4rem; border-radius:14px; text-decoration:none; transition:transform 0.15s,box-shadow 0.2s,background 0.2s; box-shadow:0 0 35px rgba(255,217,61,0.28); position:relative; z-index:1; animation:slideUp 0.7s ease 0.3s both; }
+    .cta-btn:hover { background:#ffe566; transform:translateY(-3px); box-shadow:0 0 55px rgba(255,217,61,0.45); }
+    .cta-btn svg { width:22px; height:22px; }
+
+    .ticker { padding:0.85rem 0; overflow:hidden; white-space:nowrap; border-top:1px solid #1e1e1e; border-bottom:1px solid #1e1e1e; background:var(--bg2); }
+    .ticker-inner { display:inline-block; animation:ticker 22s linear infinite; color:#555; font-size:0.95rem; font-weight:700; }
+    .ticker-inner span { margin:0 2rem; }
+    .ticker-inner .dot { color:var(--yellow); margin:0 0.5rem; }
+    @keyframes ticker { from{transform:translateX(0);} to{transform:translateX(-50%);} }
+
+    .section { padding:5rem 2rem; max-width:1080px; margin:0 auto; }
+    .section-label { color:var(--yellow); font-size:0.78rem; font-weight:900; letter-spacing:2px; text-transform:uppercase; text-align:center; margin-bottom:0.7rem; }
+    .section-title { font-size:clamp(1.9rem,4vw,2.7rem); font-weight:900; text-align:center; margin-bottom:3rem; line-height:1.25; }
+
+    .features-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:1.1rem; }
+    .feature-card { background:var(--bg2); border:1px solid #222; border-radius:18px; padding:2rem; transition:transform 0.2s,border-color 0.2s,box-shadow 0.2s; }
+    .feature-card:hover { transform:translateY(-5px); border-color:var(--yellow); box-shadow:0 0 30px rgba(255,217,61,0.08); }
+    .feature-icon { font-size:2rem; margin-bottom:0.9rem; display:block; }
+    .feature-card h3 { font-weight:900; font-size:1.1rem; margin-bottom:0.5rem; }
+    .feature-card p { color:var(--gray); font-size:0.92rem; line-height:1.65; }
+
+    footer { background:var(--bg2); border-top:1px solid #1e1e1e; text-align:center; padding:2.5rem 2rem; }
+    .footer-logo { font-family:'CuteRoti',sans-serif; font-size:1.8rem; color:var(--yellow); margin-bottom:0.8rem; display:block; opacity:0.8; }
+    footer .footer-links { margin-bottom:0.8rem; }
+    footer .footer-links a { text-decoration:none; color:var(--gray); font-size:0.88rem; margin:0 1rem; font-weight:700; transition:color 0.2s; }
+    footer .footer-links a:hover { color:var(--yellow); }
+    footer p { color:#333; font-size:0.8rem; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">GoDo</a>
+  <div class="nav-links">
+    <a href="privacy.html">Privacy</a>
+    <a href="support.html">Support</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="glow glow-1"></div>
+  <div class="glow glow-2"></div>
+  <div class="hero-logo">GoDo</div>
+  <div class="hero-badge">📸 Now on the App Store</div>
+  <p class="hero-sub">A new photo challenge every single day. Pick up your camera, get creative, and share your perspective with the world.</p>
+  <a href="https://apps.apple.com" class="cta-btn" target="_blank">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+    Download on the App Store
+  </a>
+</section>
+
+<div class="ticker">
+  <div class="ticker-inner">
+    <span>📸 Daily Challenges</span><span class="dot">·</span><span>🌅 Sunrise shots</span><span class="dot">·</span><span>🎨 Creative prompts</span><span class="dot">·</span><span>🤝 Community</span><span class="dot">·</span><span>🏆 Weekly picks</span><span class="dot">·</span><span>✨ Share your world</span><span class="dot">·</span><span>🔥 New every day</span><span class="dot">·</span>
+    <span>📸 Daily Challenges</span><span class="dot">·</span><span>🌅 Sunrise shots</span><span class="dot">·</span><span>🎨 Creative prompts</span><span class="dot">·</span><span>🤝 Community</span><span class="dot">·</span><span>🏆 Weekly picks</span><span class="dot">·</span><span>✨ Share your world</span><span class="dot">·</span><span>🔥 New every day</span><span class="dot">·</span>
+  </div>
+</div>
+
+<section class="section">
+  <div class="section-label">Why GoDo?</div>
+  <h2 class="section-title">Pick up your camera.<br/>Do something with it.</h2>
+  <div class="features-grid">
+    <div class="feature-card"><span class="feature-icon">📅</span><h3>A New Challenge Daily</h3><p>Wake up to a fresh creative prompt every morning. No two days are the same — keep your photography instincts sharp.</p></div>
+    <div class="feature-card"><span class="feature-icon">🌍</span><h3>See the World Differently</h3><p>The same challenge, a thousand perspectives. Discover how people from all over interpret the same idea in unique ways.</p></div>
+    <div class="feature-card"><span class="feature-icon">🎯</span><h3>Build a Habit</h3><p>Consistency is key. GoDo helps you pick up your camera every day and grow as a photographer — one shot at a time.</p></div>
+    <div class="feature-card"><span class="feature-icon">🤝</span><h3>A Supportive Community</h3><p>Like, appreciate, and be inspired by fellow creators. No toxic competition — just genuine love for the craft.</p></div>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-logo">GoDo</span>
+  <div class="footer-links">
+    <a href="privacy.html">Privacy Policy</a>
+    <a href="support.html">Support</a>
+  </div>
+  <p>© 2025 GoDo – Daily Challenges. Developed by Illényi Keve.</p>
+</footer>
+
+</body>
+</html>
